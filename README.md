@@ -17,6 +17,10 @@ Milk centre daily ledger. Admin records per-person morning/night milk volumes; e
 - `index.html` — the app (login, admin panel, person diary).
 - `supabase/schema.sql` — full schema (tables, RLS, RPC functions, 3 seeded admins).
 
+## Live URL
+
+- **https://nightforgeio.github.io/k-k-c-dairy/** (GitHub Pages - v2 UI live)
+
 ## Setup (Supabase dashboard)
 1. Create a Supabase project.
 2. Open **SQL Editor** and paste the entire contents of `supabase/schema.sql`. Run it.

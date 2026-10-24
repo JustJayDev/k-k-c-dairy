@@ -27,11 +27,15 @@ create table if not exists public.admins (
 );
 
 -- Seed the 3 admins (codes stored hashed; plaintext NOT in DB)
+-- Idempotent: unique on name so reruns never create duplicates.
+create unique index if not exists admins_name_uidx on public.admins(name);
+delete from public.admins a using public.admins b
+ where a.id > b.id and a.name = b.name;
 insert into public.admins (name, code_hash, code_salt) values
   ('JustJayDev', '27b478e24196582c9c2753d921d1ddbc76c4bd8367548991d7fc82e243c8e0e9', 'd77b5cd6aaabc700'),
   ('Owner',      '80c116e82210b316ec10fa80fe1ada4c25c4d4511596eeda51f922186b7f5751', '72b61e470b8ff3d5'),
   ('Worker',     '231dbadbded3599c5a7c5696e822ec3aecf6da95b58e927274d09838f654511a', '3db0dacee9c97cea')
-on conflict do nothing;
+on conflict (name) do nothing;
 
 -- ---------- 3. SETTINGS (single row, id=1) ----------
 create table if not exists public.settings (
@@ -192,24 +196,20 @@ begin
   if v_aid is null then raise exception 'ADMIN_REQUIRED'; end if;
   if p_person_id is null then raise exception 'PERSON_REQUIRED'; end if;
   if p_date is null then raise exception 'DATE_REQUIRED'; end if;
-  if p_paid is null then raise exception 'PAID_REQUIRED'; end if;  -- must set red/green
+  if p_paid is null then raise exception 'PAID_REQUIRED'; end if;
   if p_morning is null or p_night is null or p_morning < 0 or p_night < 0
   then raise exception 'BAD_QUANTITY'; end if;
-
   select role into v_role from public.people where id = p_person_id;
   if v_role is null then raise exception 'PERSON_NOT_FOUND'; end if;
-
   select case when v_role = 'recipient' then recipient_rate else supplier_rate end
     into v_rate from public.settings where id = 1;
-
   v_amount := coalesce(p_morning,0) + coalesce(p_night,0);
   v_amount := round(v_amount * v_rate, 2);
-
+  return query
   insert into public.entries (person_id, entry_date, morning, night, amount, paid, recorded_by)
   values (p_person_id, p_date, coalesce(p_morning,0), coalesce(p_night,0), v_amount, p_paid,
           (select name from public.admins where id = v_aid))
-  returning id, person_id, entry_date, morning, night, amount, paid
-  into id, person_id, entry_date, morning, night, amount, paid;
+  returning id, person_id, entry_date, morning, night, amount, paid;
 end $$;
 
 -- Update an entry (admin)
@@ -237,6 +237,7 @@ begin
 
   v_amount := round((coalesce(p_morning,0) + coalesce(p_night,0)) * v_rate, 2);
 
+  return query
   update public.entries set
     morning = coalesce(p_morning,0),
     night  = coalesce(p_night,0),
@@ -244,8 +245,7 @@ begin
     paid   = p_paid,
     recorded_by = (select name from public.admins where id = v_aid)
   where id = p_entry_id
-  returning id, person_id, entry_date, morning, night, amount, paid
-  into id, person_id, entry_date, morning, night, amount, paid;
+  returning id, person_id, entry_date, morning, night, amount, paid;
 end $$;
 
 -- Delete an entry (admin)
@@ -304,6 +304,14 @@ language sql security definer stable as $$
    where p.session_token = p_token
    order by e.entry_date desc
 $$;
+
+-- Hardening: helper functions are internal-only. Revoke execute for anon
+-- so they can't be called directly through PostgREST (only used inside
+-- security-definer RPCs above).
+revoke execute on function public.gen_token() from anon;
+revoke execute on function public.hash_code(text, text) from anon;
+revoke execute on function public.who_admin(text) from anon;
+revoke execute on function public.who_person(text) from anon;
 
 -- Person sees the rates (so they can understand their totals)
 create or replace function public.person_get_rates(p_token text)

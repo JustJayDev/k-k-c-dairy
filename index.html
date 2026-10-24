@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>K.K.C Dairy · दूध डायरी</title>
 <meta name="description" content="के.के.सी डेयरी — दूध डायरी। सुबह/शाम का दूध, हिसाब और भुगतान का हर रिकॉर्ड।">
-<meta name="theme-color" content="#f7f3ec">
+<meta name="theme-color" content="#f6f1e8">
 <style>
 :root{
-  --bg:#f7f3ec; --bg-2:#efe9df; --card:#fffdf8; --card-2:#faf6ee;
-  --line:#e4dccd; --line-2:#d5c9b4;
-  --fg:#201b14; --fg-2:#4a4236; --muted:#6d6452;
-  --accent:#c86a16; --accent-ink:#fff8ef; --accent-dim:rgba(200,106,22,.12);
-  --red:#b7372b; --red-dim:#fbeae7; --green:#1d7a3c; --green-dim:#e6f4eb;
+  --bg:#f6f1e8; --bg-2:#efe8db; --card:#fffdf7; --card-2:#faf5ec;
+  --line:#e5dcc9; --line-2:#d3c6ae;
+  --fg:#231d13; --fg-2:#4d4433; --muted:#6e6450;
+  --accent:#c0671a; --accent-ink:#fff8ee; --accent-dim:rgba(192,103,26,.12);
+  --red:#b03a2c; --red-dim:#fae9e5; --green:#177a3a; --green-dim:#e5f4e9;
+  --blue:#1f5f8b; --blue-dim:#e6f1f8;
   --font-d:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif;
   --font-m:ui-monospace,Menlo,Consolas,"Noto Sans Devanagari",monospace;
-  --r:20px; --ease:cubic-bezier(.2,.7,.2,1);
+  --r:22px; --r-sm:14px; --ease:cubic-bezier(.2,.7,.2,1);
+  --shadow:0 1px 0 rgba(0,0,0,.03),0 8px 24px rgba(90,60,20,.05);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -28,105 +30,150 @@ input,select{font-family:inherit;font-size:1rem}
 .skip:focus{left:0}
 
 /* ---------- layout ---------- */
-.top{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
-.top-in{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:1.05rem}
-.brand .mark{width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:1rem}
-.lang-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:600;color:var(--fg-2);transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.top{position:sticky;top:0;z-index:50;background:rgba(246,241,232,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1160px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:1.06rem}
+.brand .mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#e08a2f);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:1rem;box-shadow:0 3px 10px var(--accent-dim)}
+.brand small{display:block;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:-2px}
+.lang-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:var(--card);border-radius:999px;padding:7px 14px;font-size:.85rem;font-weight:700;color:var(--fg-2);transition:border-color .2s var(--ease),transform .2s var(--ease)}
 .lang-toggle:hover{border-color:var(--accent);transform:translateY(-1px)}
-.lang-toggle .pi{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#fff;background:var(--fg-2)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+.lang-toggle .pi{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#fff;background:var(--fg-2)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px 60px}
 
-/* ---------- login ---------- */
-.login{max-width:420px;margin:48px auto 0;text-align:left}
-.login .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:32px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
-.login h1{font-size:1.6rem;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px;font-weight:800}
-.login .sub{color:var(--muted);font-size:.95rem;margin-bottom:24px}
+/* ---------- login hero ---------- */
+.login-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;margin:40px 0 8px}
+.login-hero .left .kicker{font-family:var(--font-m);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.login-hero h1{font-size:clamp(1.9rem,4.4vw,2.9rem);letter-spacing:-.035em;line-height:1.08;font-weight:800;margin-bottom:14px}
+.login-hero h1 .hl{color:var(--accent)}
+.login-hero .lead{color:var(--fg-2);font-size:1.04rem;max-width:46ch;margin-bottom:22px}
+.login-hero .proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.proof-chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:.84rem;font-weight:700;color:var(--fg-2)}
+.proof-chip .ic{width:18px;height:18px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:grid;place-items:center;font-size:11px}
+.login-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px;box-shadow:var(--shadow)}
+.login-card h2{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:6px;font-weight:800}
+.login-card .sub{color:var(--muted);font-size:.92rem;margin-bottom:20px}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:.82rem;font-weight:700;color:var(--fg-2);margin-bottom:6px}
-.input{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:13px 14px;background:var(--card);color:var(--fg);transition:border-color .2s var(--ease)}
-.input:focus{border-color:var(--accent);outline:none}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 22px;border:none;border-radius:999px;font-weight:700;font-size:.95rem;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
+.input{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:13px 14px;background:var(--card);color:var(--fg);transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-dim)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 22px;border:none;border-radius:999px;font-weight:700;font-size:.95rem;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease)}
 .btn-primary{background:var(--accent);color:var(--accent-ink)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px var(--accent-dim)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px var(--accent-dim)}
 .btn-full{width:100%}
 .err{color:var(--red);font-size:.86rem;margin-top:10px;min-height:1.2em}
 .hint{color:var(--muted);font-size:.85rem;text-align:center;margin-top:16px}
 
+/* ---------- explainer / how it works ---------- */
+.explain{margin-top:36px}
+.explain .head{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.explain .head h2{font-size:1.35rem;letter-spacing:-.02em;font-weight:800}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:transform .2s var(--ease),border-color .2s var(--ease)}
+.step:hover{transform:translateY(-3px);border-color:var(--accent)}
+.step .n{font-family:var(--font-m);font-size:.78rem;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+.step h3{font-size:1.02rem;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.step p{color:var(--muted);font-size:.9rem}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.legend-item{display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:.86rem;font-weight:600;color:var(--fg-2)}
+
 /* ---------- panels ---------- */
 .panel{display:none}
 .panel.on{display:block}
-.pagehead{margin:28px 0 20px}
-.pagehead h2{font-size:1.5rem;letter-spacing:-.02em;margin-bottom:4px;font-weight:800}
+.pagehead{margin:30px 0 20px}
+.pagehead h2{font-size:1.5rem;letter-spacing:-.025em;margin-bottom:4px;font-weight:800}
 .pagehead p{color:var(--muted);font-size:.92rem}
-.kicker{font-family:var(--font-m);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.kicker{font-family:var(--font-m);font-size:.73rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .grid{display:grid;gap:16px}
-.grid-people{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 .grid-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
 .stat .v{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
-.stat .l{color:var(--muted);font-size:.8rem;margin-top:2px}
+.stat .l{color:var(--muted);font-size:.8rem;margin-top:2px;font-weight:600}
+.stat .sub{font-size:.76rem;color:var(--muted);margin-top:2px}
+.stat.hl .v{color:var(--accent)}
+.stat.green .v{color:var(--green)}
+.stat.red .v{color:var(--red)}
 
 /* person chips */
 .person{display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform .2s var(--ease),border-color .2s var(--ease)}
 .person:hover{transform:translateY(-3px);border-color:var(--accent)}
-.person.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)}
 .person .nm{font-weight:700;font-size:1rem}
-.person .role{font-family:var(--font-m);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.person .role{font-family:var(--font-m);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .person .role.r{color:var(--accent)}
+.person .mini{margin-top:auto;font-size:.8rem;font-weight:700;color:var(--fg-2)}
 
 /* table */
-.tbl{width:100%;border-collapse:collapse;font-size:.93rem;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.tbl th{background:var(--bg-2);text-align:left;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:12px 14px;font-weight:700}
-.tbl td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:middle}
-.tbl tr:hover td{background:var(--card-2)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.85rem;padding:6px 12px;border-radius:999px}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-sm);-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:.93rem;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;min-width:480px}
+.tbl th{background:var(--bg-2);text-align:left;font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:13px 14px;font-weight:700;white-space:nowrap}
+.tbl td{padding:13px 14px;border-top:1px solid var(--line);vertical-align:middle}
+.tbl tbody tr{transition:background .15s}
+.tbl tbody tr:hover td{background:var(--card-2)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:.84rem;padding:6px 13px;border-radius:999px}
 .pill.unpaid{background:var(--red-dim);color:var(--red)}
 .pill.paid{background:var(--green-dim);color:var(--green)}
-.dot{width:8px;height:8px;border-radius:50%}
+.pill.neutral{background:var(--bg-2);color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .pill.unpaid .dot{background:var(--red)}
 .pill.paid .dot{background:var(--green)}
-.money{font-weight:700}
-.iconbtn{border:1px solid var(--line-2);background:var(--card);border-radius:10px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;transition:border-color .2s var(--ease),transform .2s var(--ease)}
-.iconbtn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.money{font-weight:700;font-variant-numeric:tabular-nums}
+.iconbtn{border:1px solid var(--line-2);background:var(--card);border-radius:10px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;transition:border-color .2s var(--ease),transform .2s var(--ease),background .2s}
+.iconbtn:hover{border-color:var(--accent);transform:translateY(-1px);background:var(--accent-dim)}
 
 /* form row */
 .row{display:grid;gap:12px}
 .row2{grid-template-columns:1fr 1fr}
-.row3{grid-template-columns:1fr 1fr 1fr}
-.row4{grid-template-columns:2fr 1fr 1fr 1fr}
-@media(max-width:600px){.row2,.row3,.row4{grid-template-columns:1fr}}
+@media(max-width:600px){.row2{grid-template-columns:1fr}}
 
 /* paid toggle */
-.paid-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;border:1.5px solid var(--line-2);border-radius:12px;padding:6px;background:var(--card)}
-.paid-toggle button{border:none;border-radius:8px;min-height:40px;font-weight:700;font-size:.9rem;background:transparent;color:var(--muted);transition:background .15s,color .15s}
-.paid-toggle button.active-unpaid{background:var(--red);color:#fff}
-.paid-toggle button.active-paid{background:var(--green);color:#fff}
+.paid-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;border:1.5px solid var(--line-2);border-radius:14px;padding:6px;background:var(--bg)}
+.paid-toggle button{border:none;border-radius:10px;min-height:44px;font-weight:700;font-size:.9rem;background:transparent;color:var(--muted);transition:background .15s,color .15s,transform .15s}
+.paid-toggle button:hover{transform:translateY(-1px)}
+.paid-toggle button.active-unpaid{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(176,58,44,.3)}
+.paid-toggle button.active-paid{background:var(--green);color:#fff;box-shadow:0 3px 10px rgba(23,122,58,.3)}
 
-/* tab nav */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
-.tab{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 18px;font-weight:600;font-size:.9rem;color:var(--fg-2);transition:border-color .2s var(--ease),background .2s var(--ease)}
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.tab{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:10px 18px;font-weight:700;font-size:.9rem;color:var(--fg-2);transition:border-color .2s var(--ease),background .2s var(--ease),color .2s}
 .tab.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .tab:hover{border-color:var(--accent)}
+.tab .badge{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--red);color:#fff;font-size:.72rem;font-weight:800;margin-left:6px;padding:0 6px}
 
-/* toast / success */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:600;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:90}
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);padding:13px 22px;border-radius:999px;font-weight:700;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:90;box-shadow:0 12px 30px rgba(0,0,0,.25)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.blue{background:var(--green);color:#fff}
 .toast.red{background:var(--red);color:#fff}
-.code-reveal{background:var(--accent-dim);border:1px dashed var(--accent);border-radius:12px;padding:14px;text-align:center;margin-top:12px}
-.code-reveal .c{font-family:var(--font-m);font-size:1.4rem;font-weight:800;letter-spacing:.12em;color:var(--accent)}
+.code-reveal{background:var(--accent-dim);border:1px dashed var(--accent);border-radius:14px;padding:16px;text-align:center;margin-top:14px;animation:pop .3s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.code-reveal .c{font-family:var(--font-m);font-size:1.5rem;font-weight:800;letter-spacing:.14em;color:var(--accent);margin-top:4px}
 .muted{color:var(--muted)}
 .small{font-size:.85rem}
-.mt{margin-top:16px}
-.logout{color:var(--muted);font-size:.85rem;background:none;border:none;text-decoration:underline;padding:8px}
+.mt{margin-top:18px}
+.mt2{margin-top:8px}
+.logout{color:var(--muted);font-size:.85rem;background:none;border:none;text-decoration:underline;padding:8px;transition:color .2s}
+.logout:hover{color:var(--red)}
+
+/* month picker for person */
+.monthbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.monthbar .mid{flex:1;min-width:140px}
+.monthnav{border:1px solid var(--line-2);background:var(--card);border-radius:999px;width:44px;height:44px;display:grid;place-items:center;font-size:1.1rem;transition:border-color .2s var(--ease),transform .2s}
+.monthnav:hover{border-color:var(--accent);transform:translateY(-1px)}
+
+/* helper note box */
+.note{background:var(--blue-dim);border:1px solid #cfe2f0;border-radius:var(--r-sm);padding:14px 16px;font-size:.88rem;color:var(--blue);display:flex;gap:10px;align-items:flex-start}
+.note .ni{flex:0 0 auto;margin-top:1px}
+
+@media(max-width:820px){
+  .login-hero{grid-template-columns:1fr;margin-top:24px}
+  .login-hero .left h1{font-size:clamp(1.7rem,6vw,2.2rem)}
+}
 @media(max-width:600px){
-  .top-in{padding:10px 12px}
-  .login{margin-top:24px}
-  .login .card{padding:24px 20px}
-  .tbl{font-size:.85rem}
-  .tbl th,.tbl td{padding:10px 10px}
+  .top-in{padding:10px 14px}
+  .login-card{padding:24px 20px}
+  .tbl th,.tbl td{padding:11px 11px}
+  .tbl{font-size:.86rem;min-width:440px}
   .pagehead h2{font-size:1.3rem}
+  .wrap{padding:0 14px 48px}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none !important;animation:none !important}
@@ -138,7 +185,10 @@ input,select{font-family:inherit;font-size:1rem}
 
 <header class="top">
   <div class="top-in">
-    <div class="brand"><span class="mark">KK</span><span>K.K.C Dairy</span></div>
+    <div class="brand">
+      <span class="mark">KK</span>
+      <span>K.K.C Dairy<small data-i18n="brand_tag">दूध डायरी</small></span>
+    </div>
     <button class="lang-toggle" id="langBtn" aria-pressed="false">
       <span class="pi">अ</span><span id="langLabel">English</span>
     </button>
@@ -148,10 +198,19 @@ input,select{font-family:inherit;font-size:1rem}
 <main id="app" class="wrap">
   <!-- LOGIN -->
   <section id="loginView" class="panel on">
-    <div class="login">
-      <div class="card">
+    <div class="login-hero">
+      <div class="left">
         <div class="kicker" data-i18n="lbl_kicker">// डेयरी हिसाब</div>
-        <h1 data-i18n="lbl_title">अपने दूध का हिसाब देखें</h1>
+        <h1 data-i18n-html="hero_title">अपने दूध का हिसाब,<br><span class="hl">अब आपकी जेब में</span></h1>
+        <p class="lead" data-i18n="hero_sub">K.K.C Dairy की दूध डायरी — जानें कि आपने हर दिन कितना दूध लिया, इसका हिसाब क्या बना, और भुगतान कहाँ खड़ा है।</p>
+        <div class="proof">
+          <span class="proof-chip"><span class="ic">✓</span><span data-i18n="chip1">सुबह + शाम का रिकॉर्ड</span></span>
+          <span class="proof-chip"><span class="ic">✓</span><span data-i18n="chip2">हर महीने का कुल हिसाब</span></span>
+          <span class="proof-chip"><span class="ic">✓</span><span data-i18n="chip3">लाल/हरा भुगतान स्थिति</span></span>
+        </div>
+      </div>
+      <div class="login-card">
+        <h2 data-i18n="lbl_title">डायरी खोलें</h2>
         <p class="sub" data-i18n="lbl_sub">अपना व्यक्तिगत कोड डालें — केवल आपकी डायरी खुलेगी।</p>
         <form id="loginForm">
           <div class="field">
@@ -165,6 +224,39 @@ input,select{font-family:inherit;font-size:1rem}
         <p class="hint small" data-i18n="lbl_hint">कोड आपको डेयरी मालिक द्वारा दिया जाता है।</p>
       </div>
     </div>
+
+    <!-- Explain :: what is this -->
+    <div class="explain">
+      <div class="head">
+        <div class="kicker" data-i18n="explain_kicker">// यह वेबसाइट क्या है</div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <h3 data-i18n="s1_title">हर दिन का दूध रिकॉर्ड</h3>
+          <p data-i18n="s1_body">दुकानदार आपका सुबह और शाम का दूध (लीटर में) नोट करता है। आप बस देखते हैं।</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h3 data-i18n="s2_title">आपका अपना कोड</h3>
+          <p data-i18n="s2_body">हर ग्राहक/सप्लायर के पास एक गोपनीय कोड होता है। उसी से केवल आपकी डायरी खुलती है।</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h3 data-i18n="s3_title">हिसाब और भुगतान</h3>
+          <p data-i18n="s3_body">हर एंट्री पर लाल (बकाया) या हरा (चुकाया) निशान लगता है — साफ़ देखें कि क्या बाकी है।</p>
+        </div>
+        <div class="step">
+          <div class="n">04</div>
+          <h3 data-i18n="s4_title">महीने का कुल</h3>
+          <p data-i18n="s4_body">किसी भी महीने का कुल दूध और कुल राशि एक झलक में देखें।</p>
+        </div>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="dot" style="background:var(--red)"></span><span data-i18n="leg_red">लाल = बकाया (देना बाकी)</span></span>
+        <span class="legend-item"><span class="dot" style="background:var(--green)"></span><span data-i18n="leg_green">हरा = चुकाया गया</span></span>
+      </div>
+    </div>
   </section>
 
   <!-- PERSON DIARY -->
@@ -175,7 +267,18 @@ input,select{font-family:inherit;font-size:1rem}
       <p id="diaryRole" class="small"></p>
     </div>
 
+    <div class="monthbar">
+      <button class="monthnav" id="prevMonth" aria-label="Previous month">‹</button>
+      <input class="input mid" id="personMonth" type="month">
+      <button class="monthnav" id="nextMonth" aria-label="Next month">›</button>
+    </div>
+
     <div class="grid grid-stats" id="diaryStats"></div>
+
+    <div class="note mt2">
+      <span class="ni">ℹ️</span>
+      <span id="diaryNote" class="small"></span>
+    </div>
 
     <div class="card mt">
       <div class="kicker" data-i18n="lbl_rates">// दरें</div>
@@ -207,15 +310,33 @@ input,select{font-family:inherit;font-size:1rem}
     </div>
 
     <div class="tabs" id="adminTabs">
-      <button class="tab on" data-tab="entries" data-i18n="tab_entries">आज की एंट्री</button>
+      <button class="tab on" data-tab="overview" data-i18n="tab_overview">अवलोकन</button>
+      <button class="tab" data-tab="entries" data-i18n="tab_entries">आज की एंट्री</button>
       <button class="tab" data-tab="people" data-i18n="tab_people">लोग</button>
       <button class="tab" data-tab="rates" data-i18n="tab_rates">दरें</button>
-      <button class="tab" data-tab="ledger" data-i18n="tab_ledger">लेजर / कुल हिसाब</button>
+      <button class="tab" data-tab="ledger" data-i18n="tab_ledger">लेजर</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="panel sub" data-sub="overview">
+      <div class="grid grid-stats" id="ovStats"></div>
+      <div class="card mt">
+        <div class="kicker" data-i18n="lbl_ov_due">// बकाया — इस महीने</div>
+        <div class="tbl-wrap mt2"><table class="tbl">
+          <thead><tr>
+            <th data-i18n="th_person">व्यक्ति</th>
+            <th data-i18n="th_role">भूमिका</th>
+            <th data-i18n="th_amount2">कुल राशि (₹)</th>
+            <th data-i18n="th_balance">बकाया</th>
+          </tr></thead>
+          <tbody id="ovDueRows"></tbody>
+        </table></div>
+      </div>
     </div>
 
     <!-- ENTRIES -->
     <div class="panel sub" data-sub="entries">
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px">
         <div class="card">
           <div class="kicker" data-i18n="lbl_new_entry">// नई एंट्री</div>
           <form id="entryForm">
@@ -245,13 +366,16 @@ input,select{font-family:inherit;font-size:1rem}
               </div>
               <div class="err" id="entryErr" aria-live="polite"></div>
             </div>
-            <button class="btn btn-primary btn-full" type="submit" data-i18n="lbl_save">एंट्री सेव करें</button>
+            <div class="note mt2" id="amountPreview" style="display:none">
+              <span class="ni">₹</span><span id="amountPreviewTxt"></span>
+            </div>
+            <button class="btn btn-primary btn-full mt2" type="submit" data-i18n="lbl_save">एंट्री सेव करें</button>
           </form>
         </div>
         <div class="card">
           <div class="kicker" data-i18n="lbl_edit_entry">// एंट्री बदलें</div>
           <p class="small muted" data-i18n="lbl_edit_hint">नीचे की सूची में किसी भी पंक्ति के ✎ पे क्लिक करें।</p>
-          <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+          <div class="tbl-wrap mt2"><table class="tbl">
             <thead><tr>
               <th data-i18n="th_date">तारीख</th>
               <th data-i18n="th_person">व्यक्ति</th>
@@ -267,7 +391,7 @@ input,select{font-family:inherit;font-size:1rem}
 
     <!-- PEOPLE -->
     <div class="panel sub" data-sub="people">
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px">
         <div class="card">
           <div class="kicker" data-i18n="lbl_new_person">// नया व्यक्ति</div>
           <form id="personForm">
@@ -287,23 +411,23 @@ input,select{font-family:inherit;font-size:1rem}
             <div class="code-reveal" id="codeReveal" hidden>
               <p class="small muted" data-i18n="lbl_new_code">नया कोड (केवल एक बार दिखेगा):</p>
               <div class="c" id="newCode"></div>
-              <p class="small muted mt" data-i18n="lbl_code_note">यह कोड उस व्यक्ति को दें।</p>
+              <p class="small muted mt2" data-i18n="lbl_code_note">यह कोड उस व्यक्ति को दें।</p>
             </div>
           </form>
         </div>
         <div class="card">
           <div class="kicker" data-i18n="lbl_people_list">// सभी लोग</div>
-          <div class="grid grid-people" id="peopleList" style="margin-top:12px"></div>
+          <div class="grid grid-people mt2" id="peopleList" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
         </div>
       </div>
     </div>
 
     <!-- RATES -->
     <div class="panel sub" data-sub="rates">
-      <div class="card" style="max-width:420px">
+      <div class="card" style="max-width:440px">
         <div class="kicker" data-i18n="lbl_rates_manage">// दरें सेट करें</div>
         <p class="small muted" data-i18n="lbl_rates_hint">दरें कभी भी बदली जा सकती हैं। दर आपके हिसाब से अब से लागू होगी।</p>
-        <form id="rateForm" style="margin-top:16px">
+        <form id="rateForm" class="mt2">
           <div class="field">
             <label for="rrecip" data-i18n="lbl_rate_recipient">ग्राहक दर (₹ / लीटर)</label>
             <input id="rrecip" class="input" type="number" min="0" step="0.5" required>
@@ -322,11 +446,11 @@ input,select{font-family:inherit;font-size:1rem}
     <div class="panel sub" data-sub="ledger">
       <div class="card">
         <div class="kicker" data-i18n="lbl_ledger">// सारांश — महीने के अनुसार</div>
-        <div class="field" style="max-width:220px;margin-top:12px">
+        <div class="field mt2" style="max-width:220px">
           <label for="monthPick" data-i18n="lbl_month">महीना</label>
           <input id="monthPick" class="input" type="month">
         </div>
-        <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+        <div class="tbl-wrap mt2"><table class="tbl">
           <thead><tr>
             <th data-i18n="th_person">व्यक्ति</th>
             <th data-i18n="th_role">भूमिका</th>
@@ -360,31 +484,35 @@ var LS_LANG = 'kkc_lang';
 /* ================= I18N ================= */
 var EN = {
   skip:'Skip to main content',
+  brand_tag:'MILK DIARY',
   lbl_kicker:'// DAIRY LEDGER',
-  lbl_title:'See your milk ledger',
-  lbl_sub:'Enter your personal code — only your diary will open.',
-  lbl_code:'Personal code',
-  ph_code:'e.g. GRV1OLEP',
-  lbl_login:'Open diary',
-  lbl_hint:'Your code is given by the dairy owner.',
-  lbl_diary_kicker:'// MY DIARY',
-  lbl_rates:'// RATES',
-  lbl_history:'// HISTORY',
+  hero_title:'Your milk records,<br><span class="hl">now at your fingertips</span>',
+  hero_sub:'K.K.C Dairy milk diary — see how much milk you took each day, what it adds up to, and where your payment stands.',
+  chip1:'Morning + night records', chip2:'Monthly totals', chip3:'Red/green payment status',
+  lbl_title:'Open your diary', lbl_sub:'Enter your personal code — only your diary will open.',
+  lbl_code:'Personal code', ph_code:'e.g. GRV1OLEP',
+  lbl_login:'Open diary', lbl_hint:'Your code is given by the dairy owner.',
+  explain_kicker:'// WHAT IS THIS WEBSITE',
+  s1_title:'Daily milk records', s1_body:'The shopkeeper notes your morning and night milk (in litres). You just view it.',
+  s2_title:'Your own code', s2_body:'Every customer/supplier has a private code. It opens only your diary.',
+  s3_title:'Ledger + payment', s3_body:'Every entry gets a red (due) or green (paid) mark — see clearly what is outstanding.',
+  s4_title:'Monthly totals', s4_body:'View total milk and total amount for any month at a glance.',
+  leg_red:'Red = due (pending payment)', leg_green:'Green = paid',
+  lbl_diary_kicker:'// MY DIARY', lbl_rates:'// RATES', lbl_history:'// HISTORY',
   th_date:'Date', th_morning:'Morning (L)', th_night:'Night (L)',
   th_amount:'Amount', th_status:'Status', th_person:'Person', th_total:'Total',
   th_role:'Role', th_litres:'Total milk (L)', th_amount2:'Total amount (₹)',
   th_paid_amnt:'Paid', th_balance:'Balance / Due',
   lbl_logout_person:'Log out',
-  lbl_admin_kicker:'// ADMIN',
-  lbl_admin_sub:'People, rates, daily entries and payments — all from here.',
-  tab_entries:'Today\'s entry', tab_people:'People', tab_rates:'Rates', tab_ledger:'Ledger / totals',
+  lbl_admin_kicker:'// ADMIN', lbl_admin_sub:'People, rates, daily entries and payments — all from here.',
+  tab_overview:'Overview', tab_entries:'Today\'s entry', tab_people:'People', tab_rates:'Rates', tab_ledger:'Ledger',
   lbl_new_entry:'// NEW ENTRY', lbl_person:'Person', lbl_date:'Date',
   lbl_morning:'Morning (L)', lbl_night:'Night (L)',
   lbl_paid:'Payment — choose (required)',
   lbl_unpaid:'Due (red)', lbl_paid2:'Paid (green)',
   lbl_save:'Save entry', lbl_edit_entry:'// EDIT ENTRY',
   lbl_edit_hint:'Click the ✎ on any row below to edit.',
-  lbl_new_person:'// NEW PERSON', lbl_name:'Name', lbl_role:'Role',
+  lbl_new_person:'// NEW PERSON', lbl_name:'Name', ph_name:'e.g. Ram Kumar', lbl_role:'Role',
   opt_recipient:'Recipient (takes milk)', opt_supplier:'Supplier (gives milk)',
   lbl_create_person:'Create person', lbl_new_code:'New code (shown only once):',
   lbl_code_note:'Give this code to that person.',
@@ -394,6 +522,7 @@ var EN = {
   lbl_rate_supplier:'Supplier rate (₹ / litre)',
   lbl_save_rates:'Save rates', lbl_ledger:'// SUMMARY — BY MONTH',
   lbl_month:'Month', lbl_ledger_hint:'Due = total amount − paid. Green = fully paid, red = due.',
+  lbl_ov_due:'// DUE — THIS MONTH',
   lbl_logout_admin:'Log out',
   err_required:'Please enter your code.', err_bad:'Invalid code. Please try again.',
   err_network:'Network error. Check connection and retry.',
@@ -401,35 +530,45 @@ var EN = {
   err_paid:'Please choose Paid or Due.', err_date:'Choose a date.',
   err_person:'Choose a person.', err_qty:'Enter valid quantities.',
   ok_saved:'Saved ✓', ok_person_created:'Person created ✓', ok_rates:'Rates saved ✓',
-  ok_deleted:'Deleted ✓'
+  ok_deleted:'Deleted ✓',
+  note_diary:'Your diary shows every recorded delivery. Red = payment still due, Green = paid.',
+  lbl_litres:'Total milk', lbl_total_amount:'Total amount', lbl_due:'Due', lbl_paid_amnt:'Paid',
+  no_entries:'No records this month yet.', ov_people:'People', ov_entries:'Entries (this month)',
+  ov_litres:'Milk (this month)', ov_unpaid:'Unpaid total',
+  lbl_update:'Update entry', lbl_amount_prev:'Amount = {amt} (at ₹{rate}/L)',
+  lbl_no_due:'No outstanding dues this month.'
 };
 var HI = {
   skip:'मुख्य सामग्री पर जाएँ',
+  brand_tag:'दूध डायरी',
   lbl_kicker:'// डेयरी हिसाब',
-  lbl_title:'अपने दूध का हिसाब देखें',
-  lbl_sub:'अपना व्यक्तिगत कोड डालें — केवल आपकी डायरी खुलेगी।',
-  lbl_code:'व्यक्तिगत कोड',
-  ph_code:'उदा: GRV1OLEP',
-  lbl_login:'डायरी खोलें',
-  lbl_hint:'कोड आपको डेयरी मालिक द्वारा दिया जाता है।',
-  lbl_diary_kicker:'// मेरी डायरी',
-  lbl_rates:'// दरें',
-  lbl_history:'// इतिहास',
+  hero_title:'अपने दूध का हिसाब,<br><span class="hl">अब आपकी जेब में</span>',
+  hero_sub:'K.K.C Dairy की दूध डायरी — जानें कि आपने हर दिन कितना दूध लिया, इसका हिसाब क्या बना, और भुगतान कहाँ खड़ा है।',
+  chip1:'सुबह + शाम का रिकॉर्ड', chip2:'हर महीने का कुल हिसाब', chip3:'लाल/हरा भुगतान स्थिति',
+  lbl_title:'डायरी खोलें', lbl_sub:'अपना व्यक्तिगत कोड डालें — केवल आपकी डायरी खुलेगी।',
+  lbl_code:'व्यक्तिगत कोड', ph_code:'उदा: GRV1OLEP',
+  lbl_login:'डायरी खोलें', lbl_hint:'कोड आपको डेयरी मालिक द्वारा दिया जाता है।',
+  explain_kicker:'// यह वेबसाइट क्या है',
+  s1_title:'हर दिन का दूध रिकॉर्ड', s1_body:'दुकानदार आपका सुबह और शाम का दूध (लीटर में) नोट करता है। आप बस देखते हैं।',
+  s2_title:'आपका अपना कोड', s2_body:'हर ग्राहक/सप्लायर के पास एक गोपनीय कोड होता है। उसी से केवल आपकी डायरी खुलती है।',
+  s3_title:'हिसाब और भुगतान', s3_body:'हर एंट्री पर लाल (बकाया) या हरा (चुकाया) निशान लगता है — साफ़ देखें कि क्या बाकी है।',
+  s4_title:'महीने का कुल', s4_body:'किसी भी महीने का कुल दूध और कुल राशि एक झलक में देखें।',
+  leg_red:'लाल = बकाया (देना बाकी)', leg_green:'हरा = चुकाया गया',
+  lbl_diary_kicker:'// मेरी डायरी', lbl_rates:'// दरें', lbl_history:'// इतिहास',
   th_date:'तारीख', th_morning:'सुबह (ली.)', th_night:'शाम (ली.)',
   th_amount:'राशि', th_status:'स्थिति', th_person:'व्यक्ति', th_total:'कुल',
   th_role:'भूमिका', th_litres:'कुल दूध (ली.)', th_amount2:'कुल राशि (₹)',
   th_paid_amnt:'भुगतान', th_balance:'शेष / बकाया',
   lbl_logout_person:'लॉगआउट',
-  lbl_admin_kicker:'// प्रबंधन',
-  lbl_admin_sub:'लोग, दरें, रोज़ाना एंट्री और भुगतान — सब यहीं से।',
-  tab_entries:'आज की एंट्री', tab_people:'लोग', tab_rates:'दरें', tab_ledger:'लेजर / कुल हिसाब',
+  lbl_admin_kicker:'// प्रबंधन', lbl_admin_sub:'लोग, दरें, रोज़ाना एंट्री और भुगतान — सब यहीं से।',
+  tab_overview:'अवलोकन', tab_entries:'आज की एंट्री', tab_people:'लोग', tab_rates:'दरें', tab_ledger:'लेजर',
   lbl_new_entry:'// नई एंट्री', lbl_person:'व्यक्ति', lbl_date:'तारीख',
   lbl_morning:'सुबह (ली.)', lbl_night:'शाम (ली.)',
   lbl_paid:'भुगतान — चुनें (ज़रूरी)',
   lbl_unpaid:'बकाया (लाल)', lbl_paid2:'चुकाया (हरा)',
   lbl_save:'एंट्री सेव करें', lbl_edit_entry:'// एंट्री बदलें',
   lbl_edit_hint:'नीचे की सूची में किसी भी पंक्ति के ✎ पे क्लिक करें।',
-  lbl_new_person:'// नया व्यक्ति', lbl_name:'नाम', lbl_role:'भूमिका',
+  lbl_new_person:'// नया व्यक्ति', lbl_name:'नाम', ph_name:'जैसे: राम कुमार', lbl_role:'भूमिका',
   opt_recipient:'ग्राहक (दूध लेता है)', opt_supplier:'सप्लायर (दूध देता है)',
   lbl_create_person:'व्यक्ति बनाएँ', lbl_new_code:'नया कोड (केवल एक बार दिखेगा):',
   lbl_code_note:'यह कोड उस व्यक्ति को दें।',
@@ -439,6 +578,7 @@ var HI = {
   lbl_rate_supplier:'सप्लायर दर (₹ / लीटर)',
   lbl_save_rates:'दरें सेव करें', lbl_ledger:'// सारांश — महीने के अनुसार',
   lbl_month:'महीना', lbl_ledger_hint:'बकाया = कुल राशि − चुकाया गया। हरा = पूरा चुकाया, लाल = बकाया।',
+  lbl_ov_due:'// बकाया — इस महीने',
   lbl_logout_admin:'लॉगआउट',
   err_required:'कृपया अपना कोड डालें।', err_bad:'गलत कोड। दोबारा कोशिश करें।',
   err_network:'नेटवर्क गड़बड़ी। कनेक्शन जाँचें।',
@@ -446,25 +586,33 @@ var HI = {
   err_paid:'कृपया चुकाया या बकाया चुनें।', err_date:'तारीख चुनें।',
   err_person:'व्यक्ति चुनें।', err_qty:'सही मात्रा डालें।',
   ok_saved:'सेव हो गया ✓', ok_person_created:'व्यक्ति बन गया ✓', ok_rates:'दरें सेव ✓',
-  ok_deleted:'हटा दिया ✓'
+  ok_deleted:'हटा दिया ✓',
+  note_diary:'आपकी डायरी हर दर्ज दूध दिखाती है। लाल = भुगतान बाकी, हरा = चुकाया गया।',
+  lbl_litres:'कुल दूध', lbl_total_amount:'कुल राशि', lbl_due:'बकाया', lbl_paid_amnt:'चुकाया',
+  no_entries:'इस महीने कोई रिकॉर्ड नहीं।', ov_people:'लोग', ov_entries:'एंट्री (इस महीने)',
+  ov_litres:'दूध (इस महीने)', ov_unpaid:'कुल बकाया',
+  lbl_update:'एंट्री अपडेट करें', lbl_amount_prev:'राशि = {amt} (₹{rate}/लीटर)',
+  lbl_no_due:'इस महीने कोई बकाया नहीं।'
 };
 var DICT = { en:EN, hi:HI };
 var curLang = 'hi';
 
 /* ================= STATE ================= */
-var session = null; // {type:'admin'|'person', id, name, role?, token}
-var people = [];   // admin: cached people
+var session = null;
+var people = [];
 var rates = {recipient_rate:0, supplier_rate:0};
 var editingEntryId = null;
 var paidFlag = null;
 var ledgerMonth = '';
+var personMonth = '';
+var allEntries = [];
 
-/* ================= DOM SHORTCUTS ================= */
+/* ================= DOM ================= */
 function $(id){ return document.getElementById(id); }
 function show(id){ $(id).classList.add('on'); }
 function hide(id){ $(id).classList.remove('on'); }
 
-/* ================= I18N APPLY ================= */
+/* ================= LANG ================= */
 function applyLang(){
   var d = DICT[curLang];
   document.documentElement.lang = curLang === 'hi' ? 'hi' : 'en';
@@ -473,18 +621,17 @@ function applyLang(){
     var k = nodes[i].getAttribute('data-i18n');
     if(d[k]) nodes[i].textContent = d[k];
   }
-  var htmlAttrs = document.querySelectorAll('[data-i18n-attr]');
-  for(var j=0;j<htmlAttrs.length;j++){
-    var el = htmlAttrs[j];
-    var spec = el.getAttribute('data-i18n-attr').split(':');
-    if(d[spec[1]] !== undefined) el.setAttribute(spec[0], d[spec[1]]);
-  }
   var htmlNodes = document.querySelectorAll('[data-i18n-html]');
   for(var q=0;q<htmlNodes.length;q++){
     var kk = htmlNodes[q].getAttribute('data-i18n-html');
     if(d[kk]) htmlNodes[q].innerHTML = d[kk];
   }
-  // language toggle label
+  var attrNodes = document.querySelectorAll('[data-i18n-attr]');
+  for(var j=0;j<attrNodes.length;j++){
+    var el = attrNodes[j];
+    var spec = el.getAttribute('data-i18n-attr').split(':');
+    if(d[spec[1]] !== undefined) el.setAttribute(spec[0], d[spec[1]]);
+  }
   $('langLabel').textContent = curLang === 'hi' ? 'English' : 'हिंदी';
   $('langBtn').setAttribute('aria-pressed', curLang === 'hi' ? 'false' : 'true');
 }
@@ -520,20 +667,22 @@ function rpc(fn, params){
   });
 }
 
-/* ================= DATE HELPERS ================= */
+/* ================= HELPERS ================= */
 function todayStr(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function fmtDate(iso){
-  if(!iso) return '';
-  var p = iso.split('-');
-  return p[2]+'/'+p[1]+'/'+p[0];
-}
+function fmtDate(iso){ if(!iso) return ''; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function monthKey(iso){ return iso ? iso.slice(0,7) : ''; }
+function num(n){ return (Number(n)||0).toLocaleString('en-IN'); }
+function statusPill(paid){
+  if(paid) return '<span class="pill paid"><span class="dot"></span>'+T('lbl_paid2')+'</span>';
+  return '<span class="pill unpaid"><span class="dot"></span>'+T('lbl_unpaid')+'</span>';
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'"',"'":'&#39;'}[c]; }); }
 
-/* ================= VIEW ROUTER ================= */
+/* ================= ROUTER ================= */
 function render(){
   hide('loginView'); hide('diaryView'); hide('adminView');
   if(!session){ show('loginView'); return; }
-  if(session.type === 'admin'){ show('adminView'); renderAdmin(); }
+  if(session.type==='admin'){ show('adminView'); renderAdmin(); }
   else { show('diaryView'); renderDiary(); }
 }
 
@@ -544,76 +693,80 @@ $('loginForm').addEventListener('submit', function(e){
   var err = $('loginErr');
   err.textContent = '';
   if(!code){ err.textContent = T('err_required'); return; }
-  loginAs(code, 'admin').catch(function(){
-    return loginAs(code, 'person');
-  }).catch(function(){
-    err.textContent = T('err_bad');
-  });
+  loginAs(code, 'admin').catch(function(){ return loginAs(code, 'person'); })
+    .catch(function(){ err.textContent = T('err_bad'); });
 });
-
 function loginAs(code, type){
-  var fn = type === 'admin' ? 'login_admin' : 'login_person';
+  var fn = type==='admin' ? 'login_admin' : 'login_person';
   return rpc(fn, {p_code:code}).then(function(d){
     if(!d || !d.length) throw new Error('empty');
     var row = d[0];
-    session = type === 'admin'
+    session = type==='admin'
       ? {type:'admin', id:row.id, name:row.name, token:row.token}
       : {type:'person', id:row.id, name:row.name, role:row.role, token:row.token};
     try{ localStorage.setItem(LS_SESSION, JSON.stringify(session)); }catch(_){}
     render();
   });
 }
-
-function logout(){
-  session = null;
-  try{ localStorage.removeItem(LS_SESSION); }catch(_){}
-  render();
-}
+function logout(){ session=null; try{ localStorage.removeItem(LS_SESSION); }catch(_){} render(); }
 $('personLogout').addEventListener('click', logout);
 $('adminLogout').addEventListener('click', logout);
 
 /* ================= PERSON DIARY ================= */
 function renderDiary(){
   $('diaryName').textContent = session.name;
-  $('diaryRole').textContent = session.role === 'supplier'
-    ? T('opt_supplier') : T('opt_recipient');
-
+  $('diaryRole').textContent = session.role==='supplier' ? T('opt_supplier') : T('opt_recipient');
+  $('diaryNote').textContent = T('note_diary');
+  if(!personMonth) personMonth = todayStr().slice(0,7);
+  $('personMonth').value = personMonth;
+  loadDiaryMonth(personMonth);
+}
+$('personMonth').addEventListener('change', function(){ personMonth = this.value; loadDiaryMonth(personMonth); });
+$('prevMonth').addEventListener('click', function(){ shiftMonth(-1); });
+$('nextMonth').addEventListener('click', function(){ shiftMonth(1); });
+function shiftMonth(delta){
+  var p = personMonth.split('-');
+  var y = +p[0], m = +p[1] - 1 + delta;
+  if(m < 0){ m = 11; y--; } if(m > 11){ m = 0; y++; }
+  personMonth = y + '-' + String(m+1).padStart(2,'0');
+  $('personMonth').value = personMonth;
+  loadDiaryMonth(personMonth);
+}
+function loadDiaryMonth(month){
   rpc('person_get_diary', {p_token:session.token}).then(function(rows){
-    var stats = {litres:0, amount:0, paid:0, unpaid:0};
+    var stats = {litres:0, amount:0, unpaid:0};
     var base = $('diaryRows');
     base.innerHTML = '';
+    var any = false;
     (rows||[]).forEach(function(r){
-      var tr = document.createElement('tr');
+      if(monthKey(r.entry_date) !== month) return;
+      any = true;
       var litre = (Number(r.morning)||0)+(Number(r.night)||0);
       stats.litres += litre; stats.amount += Number(r.amount)||0;
-      if(r.paid) stats.paid += Number(r.amount)||0; else stats.unpaid += Number(r.amount)||0;
+      if(!r.paid) stats.unpaid += Number(r.amount)||0;
+      var tr = document.createElement('tr');
       tr.innerHTML = '<td>'+fmtDate(r.entry_date)+'</td><td>'+num(r.morning)+'</td><td>'+num(r.night)+'</td>'
         +'<td class="money">₹'+num(r.amount)+'</td><td>'+statusPill(r.paid)+'</td>';
       base.appendChild(tr);
     });
-    if(!rows || !rows.length){
-      base.innerHTML = '<tr><td colspan="5" class="muted" style="text-align:center">'+T('lbl_no_entries')+'</td></tr>';
+    if(!any){
+      base.innerHTML = '<tr><td colspan="5" class="muted" style="text-align:center">'+T('no_entries')+'</td></tr>';
     }
+    var due = stats.amount - stats.unpaid;
     $('diaryStats').innerHTML = statCard(T('lbl_litres'), num(stats.litres)+' L')
       + statCard(T('lbl_total_amount'), '₹'+num(stats.amount))
-      + statCard(T('lbl_paid_amnt'), '₹'+num(stats.paid), 'green')
+      + statCard(T('lbl_paid_amnt'), '₹'+num(due), 'green')
       + statCard(T('lbl_due'), '₹'+num(stats.unpaid), stats.unpaid>0?'red':'green');
   }).catch(function(){ toast(T('err_network'),'red'); });
-
   rpc('person_get_rates', {p_token:session.token}).then(function(d){
     var r = (d&&d[0])||{};
-    if(session.role==='supplier') $('diaryRates').textContent = T('lbl_rate_supplier')+' = ₹'+num(r.supplier_rate);
-    else $('diaryRates').textContent = T('lbl_rate_recipient')+' = ₹'+num(r.recipient_rate);
+    $('diaryRates').textContent = session.role==='supplier'
+      ? T('lbl_rate_supplier')+' = ₹'+num(r.supplier_rate)
+      : T('lbl_rate_recipient')+' = ₹'+num(r.recipient_rate);
   }).catch(function(){});
 }
 function statCard(label, val, tone){
-  return '<div class="card stat"><div class="v" style="'+(tone==='green'?'color:var(--green)':tone==='red'?'color:var(--red)':'')+'">'+val+'</div><div class="l">'+label+'</div></div>';
-}
-function num(n){ return (Number(n)||0).toLocaleString('en-IN'); }
-function statusPill(paid){
-  var unpaid = T('lbl_unpaid'), paid2 = T('lbl_paid2');
-  if(paid) return '<span class="pill paid"><span class="dot"></span>'+paid2+'</span>';
-  return '<span class="pill unpaid"><span class="dot"></span>'+unpaid+'</span>';
+  return '<div class="card stat '+(tone||'')+'"><div class="v">'+val+'</div><div class="l">'+label+'</div></div>';
 }
 
 /* ================= ADMIN ================= */
@@ -627,7 +780,6 @@ function renderAdmin(){
 function loadPeople(){
   rpc('admin_get_people',{p_token:session.token}).then(function(rows){
     people = rows||[];
-    // people list cards
     var pl = $('peopleList'); pl.innerHTML='';
     people.forEach(function(p){
       var el=document.createElement('div');
@@ -636,12 +788,9 @@ function loadPeople(){
         +(p.role==='supplier'?T('opt_supplier'):T('opt_recipient'))+'</div>';
       pl.appendChild(el);
     });
-    // select options
-    var sel = $('eperson');
-    sel.innerHTML='';
-    people.forEach(function(p){
-      var o=document.createElement('option'); o.value=p.id; o.textContent=p.name; sel.appendChild(o);
-    });
+    var sel = $('eperson'); sel.innerHTML='';
+    people.forEach(function(p){ var o=document.createElement('option'); o.value=p.id; o.textContent=p.name; sel.appendChild(o); });
+    if(people.length) updateAmountPreview();
   }).catch(function(){ toast(T('err_network'),'red'); });
 }
 function loadRates(){
@@ -650,12 +799,14 @@ function loadRates(){
     rates = r;
     $('rrecip').value = r.recipient_rate;
     $('rsupp').value = r.supplier_rate;
+    updateAmountPreview();
   }).catch(function(){});
 }
 function loadAdminEntries(){
   rpc('admin_get_entries',{p_token:session.token}).then(function(rows){
+    allEntries = rows||[];
     var tb=$('adminEntryRows'); tb.innerHTML='';
-    (rows||[]).forEach(function(e){
+    allEntries.slice(0,40).forEach(function(e){
       var tr=document.createElement('tr');
       tr.innerHTML='<td>'+fmtDate(e.entry_date)+'</td><td>'+esc(e.person_name)+'</td>'
         +'<td>'+num((Number(e.morning)||0)+(Number(e.night)||0))+' L</td><td>'+statusPill(e.paid)+'</td>'
@@ -663,16 +814,13 @@ function loadAdminEntries(){
         +'<button class="iconbtn" data-del="'+e.id+'" title="Delete">🗑</button></td>';
       tb.appendChild(tr);
     });
-    tb.querySelectorAll('[data-edit]').forEach(function(b){
-      b.addEventListener('click', function(){ startEdit(b.getAttribute('data-edit'), rows); });
-    });
-    tb.querySelectorAll('[data-del]').forEach(function(b){
-      b.addEventListener('click', function(){ delEntry(b.getAttribute('data-del')); });
-    });
+    tb.querySelectorAll('[data-edit]').forEach(function(b){ b.addEventListener('click', function(){ startEdit(b.getAttribute('data-edit')); }); });
+    tb.querySelectorAll('[data-del]').forEach(function(b){ b.addEventListener('click', function(){ delEntry(b.getAttribute('data-del')); }); });
+    renderOverview();
   }).catch(function(){});
 }
-function startEdit(id, rows){
-  var e = rows.find(function(r){ return r.id===id; });
+function startEdit(id){
+  var e = allEntries.find(function(r){ return r.id===id; });
   if(!e) return;
   editingEntryId = id;
   $('eperson').value = e.person_id;
@@ -687,20 +835,29 @@ function delEntry(id){
     toast(T('ok_deleted'),'blue'); loadAdminEntries(); loadLedger();
   }).catch(function(){ toast(T('err_network'),'red'); });
 }
-/* paid toggle */
 function setPaid(v){
   paidFlag = v;
-  var btns = document.querySelectorAll('#paidToggle button');
-  btns.forEach(function(b){
+  document.querySelectorAll('#paidToggle button').forEach(function(b){
     b.classList.remove('active-paid','active-unpaid');
-    if(String(b.getAttribute('data-paid'))===String(v?1:0)){
-      b.classList.add(v?'active-paid':'active-unpaid');
-    }
+    if(String(b.getAttribute('data-paid'))===String(v?1:0)) b.classList.add(v?'active-paid':'active-unpaid');
   });
 }
 document.querySelectorAll('#paidToggle button').forEach(function(b){
   b.addEventListener('click', function(){ setPaid(b.getAttribute('data-paid')==='1'); });
 });
+function updateAmountPreview(){
+  var sel = $('eperson').value;
+  if(!sel || !people.length) return;
+  var p = people.find(function(x){ return x.id===sel; });
+  if(!p) return;
+  var rate = p.role==='supplier' ? (Number(rates.supplier_rate)||0) : (Number(rates.recipient_rate)||0);
+  var morn = parseFloat($('emorning').value)||0, night = parseFloat($('enight').value)||0;
+  var amt = Math.round((morn+night)*rate*100)/100;
+  $('amountPreviewTxt').textContent = T('lbl_amount_prev').replace('{amt}', num(amt)).replace('{rate}', num(rate));
+  $('amountPreview').style.display = amt>0 ? 'block' : 'none';
+}
+['emorning','enight'].forEach(function(id){ $(id).addEventListener('input', updateAmountPreview); });
+$('eperson').addEventListener('change', updateAmountPreview);
 $('entryForm').addEventListener('submit', function(e){
   e.preventDefault();
   var err=$('entryErr'); err.textContent='';
@@ -710,15 +867,15 @@ $('entryForm').addEventListener('submit', function(e){
   if(!date){ err.textContent=T('err_date'); return; }
   if(paidFlag===null){ err.textContent=T('err_paid'); return; }
   if(isNaN(morn)||isNaN(night)||morn<0||night<0){ err.textContent=T('err_qty'); return; }
-  var params = {p_token:session.token, p_person_id:personId, p_date:date,
-                p_morning:morn, p_night:night, p_paid:paidFlag};
+  var params = {p_token:session.token, p_person_id:personId, p_date:date, p_morning:morn, p_night:night, p_paid:paidFlag};
   var fn = editingEntryId ? 'admin_update_entry' : 'admin_add_entry';
-  if(editingEntryId){ params.p_entry_id = editingEntryId; }
+  if(editingEntryId) params.p_entry_id = editingEntryId;
   rpc(fn, params).then(function(){
     toast(T('ok_saved'),'blue');
     editingEntryId=null; paidFlag=null; setPaid(null);
     $('entryForm').querySelector('.btn').textContent = T('lbl_save');
     $('emorning').value=0; $('enight').value=0; $('edate').value=todayStr();
+    $('amountPreview').style.display='none';
     loadAdminEntries(); loadLedger();
   }).catch(function(){ err.textContent=T('err_network'); });
 });
@@ -745,7 +902,38 @@ $('rateForm').addEventListener('submit', function(e){
     toast(T('ok_rates'),'blue'); loadRates();
   }).catch(function(){ err.textContent=T('err_network'); });
 });
-/* ledger */
+function renderOverview(){
+  var month = ledgerMonth || todayStr().slice(0,7);
+  var stats = {people:people.length, entries:0, litres:0, unpaid:0};
+  var dueMap = {};
+  allEntries.forEach(function(e){
+    if(monthKey(e.entry_date)!==month) return;
+    stats.entries++;
+    var litre=(Number(e.morning)||0)+(Number(e.night)||0);
+    stats.litres += litre;
+    if(!e.paid){
+      stats.unpaid += Number(e.amount)||0;
+      var p = dueMap[e.person_id] || {name:e.person_name, role:e.role, due:0};
+      p.due += Number(e.amount)||0;
+      dueMap[e.person_id]=p;
+    }
+  });
+  $('ovStats').innerHTML = statCard(T('ov_people'), String(stats.people))
+    + statCard(T('ov_entries'), String(stats.entries))
+    + statCard(T('ov_litres'), num(stats.litres)+' L')
+    + statCard(T('ov_unpaid'), '₹'+num(stats.unpaid), stats.unpaid>0?'red':'green');
+  var tb=$('ovDueRows'); tb.innerHTML='';
+  Object.keys(dueMap).forEach(function(id){
+    var p=dueMap[id];
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+esc(p.name)+'</td><td>'+(p.role==='supplier'?T('opt_supplier'):T('opt_recipient'))+'</td>'
+      +'<td class="money">₹'+num(p.due)+'</td><td><span class="pill unpaid"><span class="dot"></span>₹'+num(p.due)+' '+T('lbl_unpaid')+'</span></td>';
+    tb.appendChild(tr);
+  });
+  if(!Object.keys(dueMap).length){
+    tb.innerHTML='<tr><td colspan="4" class="muted" style="text-align:center">'+T('lbl_no_due')+'</td></tr>';
+  }
+}
 function loadLedger(){
   var m = ledgerMonth || todayStr().slice(0,7);
   $('monthPick').value = m;
@@ -753,31 +941,29 @@ function loadLedger(){
     var tb=$('ledgerRows'); tb.innerHTML='';
     var agg = {};
     (rows||[]).forEach(function(e){
-      if(monthKey(e.entry_date) !== m) return;
+      if(monthKey(e.entry_date)!==m) return;
       var p = agg[e.person_id] || {name:e.person_name, role:e.role, litre:0, amount:0, paid:0};
-      var litre=(Number(e.morning)||0)+(Number(e.night)||0);
-      p.litre += litre; p.amount += Number(e.amount)||0;
+      p.litre += (Number(e.morning)||0)+(Number(e.night)||0);
+      p.amount += Number(e.amount)||0;
       if(e.paid) p.paid += Number(e.amount)||0;
-      agg[e.person_id] = p;
+      agg[e.person_id]=p;
     });
     Object.keys(agg).forEach(function(id){
       var p=agg[id];
       var due = p.amount - p.paid;
-      var tr=document.createElement('tr');
       var pill = due<=0.001
         ? '<span class="pill paid"><span class="dot"></span>'+T('lbl_paid2')+'</span>'
         : '<span class="pill unpaid"><span class="dot"></span>₹'+num(due)+' '+T('lbl_unpaid')+'</span>';
+      var tr=document.createElement('tr');
       tr.innerHTML='<td>'+esc(p.name)+'</td><td>'+(p.role==='supplier'?T('opt_supplier'):T('opt_recipient'))+'</td>'
         +'<td>'+num(p.litre)+' L</td><td class="money">₹'+num(p.amount)+'</td>'
         +'<td>₹'+num(p.paid)+'</td><td>'+pill+'</td>';
       tb.appendChild(tr);
     });
-    if(!Object.keys(agg).length){
-      tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">'+T('lbl_no_entries')+'</td></tr>';
-    }
+    if(!Object.keys(agg).length) tb.innerHTML='<tr><td colspan="6" class="muted" style="text-align:center">'+T('no_entries')+'</td></tr>';
   }).catch(function(){});
 }
-$('monthPick').addEventListener('change', function(){ ledgerMonth = this.value; loadLedger(); });
+$('monthPick').addEventListener('change', function(){ ledgerMonth = this.value; loadLedger(); renderOverview(); });
 
 /* ================= TABS ================= */
 document.querySelectorAll('#adminTabs .tab').forEach(function(t){
@@ -791,31 +977,21 @@ document.querySelectorAll('#adminTabs .tab').forEach(function(t){
   });
 });
 
-/* ================= LANGUAGE TOGGLE ================= */
+/* ================= LANG ================= */
 $('langBtn').addEventListener('click', function(){
-  curLang = curLang === 'hi' ? 'en' : 'hi';
+  curLang = curLang==='hi' ? 'en' : 'hi';
   try{ localStorage.setItem(LS_LANG, curLang); }catch(_){}
   applyLang();
-  // re-render dynamic text
   if(session){ render(); }
-  else {
-    $('diaryName').textContent=''; $('diaryStats').innerHTML='';
-  }
 });
 
 /* ================= INIT ================= */
 (function init(){
-  // restore lang
   try{ var saved=localStorage.getItem(LS_LANG); if(saved) curLang=saved; }catch(_){}
   applyLang();
-  // restore session
-  try{
-    var s=localStorage.getItem(LS_SESSION);
-    if(s){ session=JSON.parse(s); }
-  }catch(_){}
+  try{ var s=localStorage.getItem(LS_SESSION); if(s) session=JSON.parse(s); }catch(_){}
   $('edate').value = todayStr();
   $('monthPick').value = todayStr().slice(0,7);
-  // clear pay on new entry (only via toggle)
   render();
 })();
 
